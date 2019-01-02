@@ -47,8 +47,8 @@ export default class DocsPage extends Component {
             <img src="https://raw.githubusercontent.com/morejust/orgb1/c9cbc1a17746e52d1accb9d14e0f9b8b/Screenshot%202018-12-26%20at%2002.20.27.png" alt="" className="shadow doc-img"/><br/><br/>
             <li>6. Smash 'Open app' and enjoy!</li>
           </ul>
-          <iframe style={{marginLeft: '22px'}} className="shadow" width="560" height="315" src="https://www.youtube.com/embed/Srz5RMnDv6s" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="YouTube Video Installation"></iframe>
-  
+          <iframe style={{marginLeft: '22px'}} className="shadow" width="560" height="315" src="https://www.youtube.com/embed/Srz5RMnDv6s" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="YouTube Video Installation"></iframe><br/><br/>
+          <p style={{marginLeft: '22px'}}>You can ask for a help in our <a className="animated_link" href="https://t.me/morejuststore" target="blank">🤖Telegram chat</a></p>
           {/*  */}
           <hr/>
 
