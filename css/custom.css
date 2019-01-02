@@ -195,6 +195,9 @@ a.btn_1.rounded, .btn_1.rounded {
   color: #000;
   font-weight: bold;
 }
+.white, .white:hover {
+  color: #fff;
+}
 
 .shadow {
   box-shadow: black 0 0 7px !important;
