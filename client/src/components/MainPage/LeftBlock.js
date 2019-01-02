@@ -22,9 +22,9 @@ export default function LeftBlock() {
 						<h2>Store Files Simple.<br/>Free. Forever</h2>
 						<p>We use public GitHub repositories to store your files for free. You can create your own free unlimited cloud storage.</p>
             <p>
-              <a className="white animated_link" href="https://medium.com/@okhlopkov/microsoft-will-pay-for-your-unlimited-cloud-storage-bc1a3a8a5727" target="black">📖 Article on Medium</a><br/>
-              <a className="white animated_link" href="https://www.producthunt.com/posts/morejust-store" target="black">🚀 Product Hunt</a><br/>
-              <a className="white animated_link" href="https://t.me/morejuststore" target="blank">🤖 Telegram</a>
+              <a className="white animated_link" href="https://medium.com/@okhlopkov/microsoft-will-pay-for-your-unlimited-cloud-storage-bc1a3a8a5727" target="black"><span role="img" aria-label="Read smile">📖</span> Article on Medium</a><br/>
+              <a className="white animated_link" href="https://www.producthunt.com/posts/morejust-store" target="black"><span role="img" aria-label="Rocket smile">🚀</span> Product Hunt</a><br/>
+              <a className="white animated_link" href="https://t.me/morejuststore" target="blank"><span role="img" aria-label="Robot smile">🤖</span> Telegram</a>
             </p>
 						<a href="https://github.com/morejust/store/blob/master/README.md" target="blank" className="btn_1 rounded">Start Now!</a>
             <Link to={process.env.PUBLIC_URL + "docs"} style={{marginLeft: "10px"}} className="btn_1 rounded">Documentation</Link>
