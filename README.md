@@ -102,3 +102,7 @@ bash add_file.sh $NAME_OF_bLOCK_REPO $AbSOLUTE_PATH_TO_FILE
 ```
 
 Keep in mind that you should have a push access to the repository. If you want to create a new repo for files (we call it 'block'), you should have the rights to create a new repo.
+
+---
+Creators:
+[Dan Okhlopkov](https://github.com/ohld), [Viktor Kirillov](https://github.com/kirillovmr), [Alexey Bykhun](https://github.com/caffeinum).
