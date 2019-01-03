@@ -102,7 +102,7 @@ connectToGitHub()
 
     const _host = server.address().address;
     const _port = server.address().port;
-    const msg = `Server started on http://${_host === '::' ? 'localhost' : _host}:${_port}`;
+    const msg = `Server started on http://${_host === '::' ? 'localhost' : _host}:${_port} | Username: ${gitState.username} | Block: ${gitState.blockLetter}${gitState.workingBlock}`;
 
     _host === '::' ? null : sendMessage(tgToken, tgChat, msg);
   });

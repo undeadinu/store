@@ -46,6 +46,7 @@ function connectToGitHub() {
     switchToNextBlock()
     .then(() => {
       console.log(`[connectToGithub]: New working block is ${gitState.blockLetter}${gitState.workingBlock}`);
+      sendMessage(tgToken, tgChat, `${gitState.username}: Switched on block ${gitState.blockLetter}${gitState.workingBlock}`)
       resolve();
     })
     .catch(error => {
