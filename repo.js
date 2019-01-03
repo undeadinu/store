@@ -3,6 +3,7 @@
  */
 
 const axios = require('axios');
+const rimraf = require('rimraf');
 
 const uploadToGithub = require('./upload')
 
@@ -28,9 +29,14 @@ if (process.env['GITHUB_ORGANIZATION']) {
   API_URL = "https://api.github.com/user";
 }
 
+function removeLocalBlocks() {
+  rimraf.sync('blocks');
+  console.log('[removeLocalBlocks]: blocks/ folder was cleared');
+}
 
 // Run once at server initialization
 function connectToGitHub() {
+  removeLocalBlocks();
   return new Promise((resolve, reject) => {
     switchToNextBlock()
     .then(() => {
@@ -172,15 +178,18 @@ function getAllBlocks() {
   return new Promise((resolve, reject) => {
     let blocks = {};
 
-    axios.get(`${API_URL}/repos?access_token=${token}`)
+    axios.get(`${API_URL}/repos?access_token=${token}&per_page=100`, {
+      visibility: 'private'
+    })
     .then(gitResponse => {
 
       // Going through each repo
       gitResponse.data.forEach(repo => {
+        // console.log('🙌 REPO', repo.name);
 
         // It this repo is block
         if (gitState.pattern.test(repo.name)) {
-          console.log('[getAllBlocks]: Found repo', repo.full_name);
+          // console.log('[getAllBlocks]: Found repo', repo.full_name);
           blocks[repo.name] = repo;
 
           if (!gitState.username) {
@@ -189,6 +198,12 @@ function getAllBlocks() {
           }
         }
       });
+
+
+      const blockNames = Object.keys(blocks).map(blockName => {
+        return blockName;
+      });
+      console.log('[getAllBlocks]: Found repos', JSON.stringify(blockNames));
 
       resolve(blocks);
     })
