@@ -1,15 +1,16 @@
-const axios = require('axios');
+const request = require('request');
+const utf8 = require('utf8');
 
-const tgNotify = parseInt(process.env['TELEGRAM_NOTIFY']);
+// Telegram Settings
+const tgToken = process.env['TELEGRAM_TOKEN'];
+const tgChat = process.env['TELEGRAM_CHAT_ID'];
 
-function sendMessage(token, chatId, text) {
-  if(token && chatId && tgNotify) {
-    axios.post(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${text}`)
-    .then(function (response) {
-      // console.log(response);
-    })
-    .catch(function (error) {
-      console.log('ERROR [sendMessage]', error);
+function sendMessage(text, silent=false) {
+  if(tgToken && tgChat) {
+    request(`https://api.telegram.org/bot${tgToken}/sendMessage?chat_id=${tgChat}&text=${utf8.encode(text)}&parse_mode=HTML&disable_notification=${silent}`, function (error, response, body) {
+      if(error) {
+        console.log('ERROR [telegram]:', error);
+      }  
     });
   }
 }
