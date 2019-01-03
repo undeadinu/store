@@ -14,10 +14,6 @@ const maxFileSizeMB = parseInt(process.env['MAX_FILE_SIZE_MB']) || 50;
 const isRepoPrivate = process.env['IS_PRIVATE'] || false;
 let API_URL;
 
-// Telegram Settings
-const tgToken = process.env['TELEGRAM_TOKEN'];
-const tgChat = process.env['TELEGRAM_CHAT_ID'];
-
 // Global state
 const gitState = {
   workingBlock: 0,
@@ -43,10 +39,9 @@ function removeLocalBlocks() {
 function connectToGitHub() {
   removeLocalBlocks();
   return new Promise((resolve, reject) => {
-    switchToNextBlock()
+    switchToNextBlock(false)
     .then(() => {
       console.log(`[connectToGithub]: New working block is ${gitState.blockLetter}${gitState.workingBlock}`);
-      sendMessage(tgToken, tgChat, `${gitState.username}: Switched on block ${gitState.blockLetter}${gitState.workingBlock}`)
       resolve();
     })
     .catch(error => {
@@ -122,7 +117,7 @@ function createBlock(blockNum) {
   });
 }
 
-function switchToNextBlock() {
+function switchToNextBlock(notify=true) {
   return new Promise((resolve, reject) => {
     getAllBlocks()
     .then(blocks => {
@@ -162,6 +157,9 @@ function switchToNextBlock() {
         createBlock(nextBlock)
         .then(() => {
           resolve('✅ New working block selected');
+          if (notify) {
+            sendMessage(`🏗 ${gitState.username}: Repo created & Switched on block ${gitState.blockLetter}${gitState.workingBlock}`);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -169,6 +167,9 @@ function switchToNextBlock() {
         })
       } else {
         resolve('✅ New working block selected');
+        if (notify) {
+          sendMessage(`👉 ${gitState.username}: Switched on block ${gitState.blockLetter}${gitState.workingBlock}`);
+        }
       }
     });
   });

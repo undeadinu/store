@@ -20,10 +20,6 @@ const publicPath = path.join(__dirname, './client/build');
 const FILES_LIMIT = 5;
 const MAX_FILE_SIZE_MB = parseInt(process.env['MAX_FILE_SIZE_MB']) || 100;
 
-// Telegram Settings
-const tgToken = process.env['TELEGRAM_TOKEN'];
-const tgChat = process.env['TELEGRAM_CHAT_ID'];
-
 app.use(cors());
 app.use(express.static(publicPath));
 
@@ -46,7 +42,6 @@ var storage = multer.diskStorage({
 
 // Applying custom upload handler
 const upload = multer({ storage: storage })
-
 
 
 app.get('/', (req, res) => {
@@ -102,9 +97,9 @@ connectToGitHub()
 
     const _host = server.address().address;
     const _port = server.address().port;
-    const msg = `Server started on http://${_host === '::' ? 'localhost' : _host}:${_port} | Username: ${gitState.username} | Block: ${gitState.blockLetter}${gitState.workingBlock}`;
+    const msg = `📡 Started http://${_host === '::' ? 'localhost' : _host}:${_port} | Username: ${gitState.username} | Block: ${gitState.blockLetter}${gitState.workingBlock}`;
 
-    _host === '::' ? null : sendMessage(tgToken, tgChat, msg);
+    _host === '::' ? null : sendMessage(msg);
   });
 
 });
