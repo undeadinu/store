@@ -9,6 +9,7 @@ const { mkdir } = require('fs');
 const cors = require('cors');
 
 const { gitState, connectToGitHub, getStats, uploadFiles } = require('./repo');
+const { sendMessage } = require('./telegram');
 
 const app = express();
 const server = http.createServer(app);
@@ -18,6 +19,10 @@ const port = process.env.PORT || 4000;
 const publicPath = path.join(__dirname, './client/build');
 const FILES_LIMIT = 5;
 const MAX_FILE_SIZE_MB = parseInt(process.env['MAX_FILE_SIZE_MB']) || 100;
+
+// Telegram Settings
+const tgToken = process.env['TELEGRAM_TOKEN'];
+const tgChat = process.env['TELEGRAM_CHAT_ID'];
 
 app.use(cors());
 app.use(express.static(publicPath));
@@ -94,6 +99,12 @@ connectToGitHub()
 
   server.listen(port, () => {
     console.log(`[Server]: App is open on port ${port}`);
+
+    const _host = server.address().address;
+    const _port = server.address().port;
+    const msg = `Server started on http://${_host === '::' ? 'localhost' : _host}:${_port} | Username: ${gitState.username} | Block: ${gitState.blockLetter}${gitState.workingBlock}`;
+
+    _host === '::' ? null : sendMessage(tgToken, tgChat, msg);
   });
 
 });

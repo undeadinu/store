@@ -5,13 +5,18 @@
 const axios = require('axios');
 const rimraf = require('rimraf');
 
-const uploadToGithub = require('./upload')
+const uploadToGithub = require('./upload');
+const { sendMessage } = require('./telegram');
 
 const token = process.env['GITHUB_TOKEN'];
 const maxBlockSizeMB = parseInt(process.env['BLOCK_SIZE_MB']) || 1000;
 const maxFileSizeMB = parseInt(process.env['MAX_FILE_SIZE_MB']) || 50;
 const isRepoPrivate = process.env['IS_PRIVATE'] || false;
 let API_URL;
+
+// Telegram Settings
+const tgToken = process.env['TELEGRAM_TOKEN'];
+const tgChat = process.env['TELEGRAM_CHAT_ID'];
 
 // Global state
 const gitState = {
@@ -41,6 +46,7 @@ function connectToGitHub() {
     switchToNextBlock()
     .then(() => {
       console.log(`[connectToGithub]: New working block is ${gitState.blockLetter}${gitState.workingBlock}`);
+      sendMessage(tgToken, tgChat, `${gitState.username}: Switched on block ${gitState.blockLetter}${gitState.workingBlock}`)
       resolve();
     })
     .catch(error => {
